@@ -1,0 +1,8 @@
+- hosts: targets
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install packages
+    dnf: name={{ item }} state=latest
+    with_items:
+      - ruby

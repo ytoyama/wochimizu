@@ -10,3 +10,5 @@ hostsFile = "hosts"
 main :: IO ()
 main = shakeArgs shakeOptions $ do
   "ping" ~> cmd "ansible all -i" hostsFile "-m ping"
+  "setup" ~> do
+    cmd "ansible-playbook --ask-become-pass -i" hostsFile "mesos.yml"
