@@ -1,8 +1,34 @@
-- hosts: targets
+- hosts: fedora
   become: yes
   become_method: sudo
   tasks:
   - name: install packages
     dnf: name={{ item }} state=latest
     with_items:
-      - ruby
+      - wget
+      - git
+      - tar
+      - libcurl-devel
+      - apr-devel
+      - java-devel
+      - maven
+      - cyrus-sasl-devel
+      - subversion-devel
+  - shell: |
+      mkdir wochimizu &&
+      cd wochimizu &&
+
+      if [ ! -d mesos-1.1.0 ]
+      then
+        wget http://www.apache.org/dist/mesos/1.1.0/mesos-1.1.0.tar.gz &&
+        tar xf mesos-1.1.0.tar.gz
+      fi &&
+
+      cd mesos-1.1.0 &&
+      ./bootstrap &&
+      mkdir build &&
+      cd build &&
+      ../configure &&
+      make &&
+      make check &&
+      make install
