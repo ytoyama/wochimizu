@@ -8,6 +8,7 @@
       - wget
       - git
       - tar
+      - docker
       - libcurl-devel
       - apr-devel
       - java-devel
