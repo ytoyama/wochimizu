@@ -20,7 +20,7 @@
       - cyrus-sasl-devel
       - subversion-devel
   - shell: |
-      mkdir cluster &&
+      mkdir -p cluster &&
       cd cluster &&
 
       if [ ! -d mesos-1.1.0 ]
@@ -31,9 +31,10 @@
 
       cd mesos-1.1.0 &&
       ./bootstrap &&
-      mkdir build &&
+      mkdir -p build &&
       cd build &&
       ../configure &&
-      make &&
-      make check &&
-      make install
+      make="make -j $(nproc)"
+      $make &&
+      $make check &&
+      $make install
