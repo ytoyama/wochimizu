@@ -1,8 +1,12 @@
-- hosts: fedora
+- hosts: master
   become: yes
   become_method: sudo
   tasks:
-  - name: install packages
+  - name: Remove official mesos
+    dnf:
+      name: mesos
+      state: absent
+  - name: Install packages
     dnf: name={{ item }} state=latest
     with_items:
       - wget
@@ -16,8 +20,8 @@
       - cyrus-sasl-devel
       - subversion-devel
   - shell: |
-      mkdir wochimizu &&
-      cd wochimizu &&
+      mkdir cluster &&
+      cd cluster &&
 
       if [ ! -d mesos-1.1.0 ]
       then
